@@ -1,0 +1,39 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+    id 'com.gradle.plugin-publish' version '1.0.0'
+}
+
+group 'fr.flowarg'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.jetbrains:annotations:23.0.0'
+}
+
+pluginBundle {
+    website = 'https://github.com/FlowArg/NMSRemapHelper'
+    vcsUrl = 'https://github.com/FlowArg/NMSRemapHelper'
+    tags = ['nms', 'spigot', 'mappings', 'export']
+}
+
+gradlePlugin {
+    plugins {
+        nmsremaphelper {
+            id = 'fr.flowarg.nmsremaphelper'
+            displayName = 'NMS Remap Helper'
+            description = 'This plugin provide some tasks to help you to export a plugin with correct mappings according to your spigot server version if you develop with a mojang mapped version of the NMS.'
+            implementationClass = 'fr.flowarg.nmsremaphelper.NMSRemapHelperPlugin'
+        }
+    }
+}
+
+publishing {
+    repositories {
+        mavenLocal()
+    }
+}
