@@ -18,10 +18,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 
+/**
+ * downloadDeps task entry.
+ */
 public abstract class DownloadDepsTask extends DefaultTask
 {
     private final Property<Directory> downloadDirectory;
 
+    /**
+     * Constructor. Create {@link #downloadDirectory} property and directory.
+     */
     public DownloadDepsTask()
     {
         try
@@ -35,6 +41,9 @@ public abstract class DownloadDepsTask extends DefaultTask
         }
     }
 
+    /**
+     * Download the specified artifacts to the download directory.
+     */
     @TaskAction
     public void execute()
     {
@@ -43,13 +52,13 @@ public abstract class DownloadDepsTask extends DefaultTask
             {
                 final var data = artifact.genURL(Artifact.CENTRAL, "jar");
                 final var url = data[0];
-                final var sha1 = getContent(new URL(artifact.genURL(Artifact.CENTRAL, "jar.sha1")[0]).openStream());
+                final var sha1 = this.getContent(new URL(artifact.genURL(Artifact.CENTRAL, "jar.sha1")[0]).openStream());
                 final var fileName = data[1];
                 final Path file = this.getDownloadDirectory().get().file(fileName).getAsFile().toPath();
 
                 if(Files.exists(file))
                 {
-                    if(sha1.equals(getSHA1(Files.newInputStream(file))))
+                    if(sha1.equals(this.getSHA1(Files.newInputStream(file))))
                         return;
                     Files.deleteIfExists(file);
                 }
@@ -65,7 +74,7 @@ public abstract class DownloadDepsTask extends DefaultTask
         });
     }
 
-    private static @NotNull String getSHA1(@NotNull InputStream input) throws Exception
+    private @NotNull String getSHA1(@NotNull InputStream input) throws Exception
     {
         final MessageDigest digest = MessageDigest.getInstance("SHA-1");
         final byte[] data = new byte[8192];
@@ -83,7 +92,7 @@ public abstract class DownloadDepsTask extends DefaultTask
         return sb.toString();
     }
 
-    private static @NotNull String getContent(InputStream remote)
+    private @NotNull String getContent(InputStream remote)
     {
         final StringBuilder sb = new StringBuilder();
 
@@ -107,9 +116,17 @@ public abstract class DownloadDepsTask extends DefaultTask
         return sb.toString();
     }
 
+    /**
+     * Get the artifacts to process.
+     * @return the artifacts to process.
+     */
     @Input
     public abstract ListProperty<Artifact> getArtifacts();
 
+    /**
+     * Get the download directory where the artifacts will be downloaded.
+     * @return the download directory.
+     */
     @InputDirectory
     public Property<Directory> getDownloadDirectory()
     {

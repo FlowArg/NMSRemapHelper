@@ -5,8 +5,14 @@ import org.gradle.internal.jvm.Jvm;
 
 import java.util.List;
 
+/**
+ * remapJar task entry.
+ */
 public abstract class RemapJarTask extends MappingTask
 {
+    /**
+     * Execute SpecialSource to remap the freshly obfuscated plugin by renaming the classes like spigot server.
+     */
     @TaskAction
     public void execute()
     {

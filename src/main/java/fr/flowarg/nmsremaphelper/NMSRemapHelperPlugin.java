@@ -15,9 +15,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * The plugin entry class.
+ */
 public abstract class NMSRemapHelperPlugin implements Plugin<Project>
 {
+    /**
+     * Represent the SpecialSource artifact data.
+     */
     public static final Artifact SPECIAL_SOURCE = new Artifact("net.md-5", "SpecialSource", "1.11.0", "shaded");
+
+    /**
+     * Converts artifacts to their target files.
+     */
     public static final Map<Artifact, Path> ARTIFACT_FILES = new ConcurrentHashMap<>();
 
     @Override
