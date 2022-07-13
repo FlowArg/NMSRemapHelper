@@ -16,7 +16,7 @@ dependencies {
 }
 
 pluginBundle {
-    website = 'https://github.com/FlowArg/NMSRemapHelper'
+    website = ' https://nmsremaphelper.flowarg.fr'
     vcsUrl = 'https://github.com/FlowArg/NMSRemapHelper'
     tags = ['nms', 'spigot', 'mappings', 'export']
 }
