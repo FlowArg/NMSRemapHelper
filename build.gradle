@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'fr.flowarg'
-version '1.0.0'
+version '1.0.1'
 
 repositories {
     mavenCentral()
@@ -16,7 +16,7 @@ dependencies {
 }
 
 pluginBundle {
-    website = ' https://nmsremaphelper.flowarg.fr'
+    website = 'http://nmsremaphelper.flowarg.fr'
     vcsUrl = 'https://github.com/FlowArg/NMSRemapHelper'
     tags = ['nms', 'spigot', 'mappings', 'export']
 }

@@ -59,14 +59,18 @@ public abstract class DownloadDepsTask extends DefaultTask
                 if(Files.exists(file))
                 {
                     if(sha1.equals(this.getSHA1(Files.newInputStream(file))))
+                    {
+                        NMSRemapHelperPlugin.ARTIFACT_FILES.putIfAbsent(artifact, file);
                         return;
+                    }
+                    NMSRemapHelperPlugin.ARTIFACT_FILES.remove(artifact);
                     Files.deleteIfExists(file);
                 }
 
                 System.out.print("Downloading " + fileName + " from " + url + "...");
                 Files.copy(new URL(url).openStream(), file);
 
-                NMSRemapHelperPlugin.ARTIFACT_FILES.put(artifact, file);
+                NMSRemapHelperPlugin.ARTIFACT_FILES.putIfAbsent(artifact, file);
             } catch (Exception e)
             {
                 throw new RuntimeException(e);
