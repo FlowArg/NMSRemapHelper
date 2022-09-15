@@ -9,7 +9,7 @@ This plugin exports your plugin mapped correctly according to your Spigot versio
 First, add the plugin to your project :
 ```gradle
 plugins {
-    id 'fr.flowarg.nmsremaphelper' version '1.0.0
+    id 'fr.flowarg.nmsremaphelper' version '1.0.1'
 }
 ```
 It's possible that the version written in the README is not up-to-date. So make sure you have installed the latest plugin version.
