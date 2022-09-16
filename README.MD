@@ -9,7 +9,7 @@ This plugin exports your plugin mapped correctly according to your Spigot versio
 First, add the plugin to your project :
 ```gradle
 plugins {
-    id 'fr.flowarg.nmsremaphelper' version '1.0.1'
+    id 'fr.flowarg.nmsremaphelper' version '1.0.2'
 }
 ```
 It's possible that the version written in the README is not up-to-date. So make sure you have installed the latest plugin version.
@@ -45,5 +45,5 @@ dependencies {
 ```
 
 Then just call the `remapJar` gradle task and you'll find in your build/libs directory a filename-remap.jar file! This is the one you have to place it in the `plugins` folder of your spigot server instance.
-
+If needed, you can also call the `remapMembers` gradle task and you'll find in your build/libs directory a filename-remap-members.jar file that map also methods and fields name. This is mandatory since 1.18.1 version of Spigot.
 And all it's done!

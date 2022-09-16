@@ -41,6 +41,7 @@ public abstract class NMSRemapHelperPlugin implements Plugin<Project>
         final var downloadDepsTask = project.getTasks().register("downloadDeps", DownloadDepsTask.class);
         final var obfJarTask = project.getTasks().register("obfJar", ObfJarTask.class);
         final var remapJarTask = project.getTasks().register("remapJar", RemapJarTask.class);
+        final var remapMembersTask = project.getTasks().register("remapMembers", RemapJarTask.class);
         final String taskGroup = "nmsremaphelper";
 
         downloadDepsTask.configure(task -> {
@@ -95,6 +96,27 @@ public abstract class NMSRemapHelperPlugin implements Plugin<Project>
 
             final var outputFile = jarTask.flatMap(AbstractArchiveTask::getArchiveFile).get();
             task.getOutputFile().set(new File(outputFile.getAsFile().getParentFile(), outputFile.getAsFile().getName().replace(".jar", "") + "-remap.jar"));
+            task.getShouldReverse().set(false);
+            task.setGroup(taskGroup);
+        });
+
+        remapMembersTask.configure(task -> {
+            task.dependsOn(remapJarTask);
+            final var inputFile = remapJarTask.flatMap(RemapJarTask::getOutputFile).get();
+            task.getInputFile().convention(inputFile);
+            task.getMappingFile().set(
+                    Path.of(System.getProperty("user.home"))
+                            .resolve(".m2")
+                            .resolve("repository")
+                            .resolve("org")
+                            .resolve("spigotmc")
+                            .resolve("minecraft-server")
+                            .resolve(extension.getSpigotVersion().get())
+                            .resolve("minecraft-server-" + extension.getSpigotVersion().get() + "-maps-spigot-members.csrg")
+                            .toFile());
+
+            final var outputFile = jarTask.flatMap(AbstractArchiveTask::getArchiveFile).get();
+            task.getOutputFile().set(new File(outputFile.getAsFile().getParentFile(), outputFile.getAsFile().getName().replace(".jar", "") + "-remap-members.jar"));
             task.getShouldReverse().set(false);
             task.setGroup(taskGroup);
         });
